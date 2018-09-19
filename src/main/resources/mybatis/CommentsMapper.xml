@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangpan.netdisk.dao.CommentsMapper">
+  <resultMap id="BaseResultMap" type="com.wangpan.netdisk.model.Comments">
+    <id column="msgno" jdbcType="INTEGER" property="msgno" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="fileno" jdbcType="VARCHAR" property="fileno" />
+    <result column="commenttime" jdbcType="TIMESTAMP" property="commenttime" />
+    <result column="usernamea" jdbcType="VARCHAR" property="usernamea" />
+    <result column="usernameb" jdbcType="VARCHAR" property="usernameb" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+    <result column="msgsatus" jdbcType="INTEGER" property="msgsatus" />
+    <result column="responno" jdbcType="VARCHAR" property="responno" />
+    <result column="belongname" jdbcType="VARCHAR" property="belongname" />
+  </resultMap>
+  <resultMap id="BaseResultMapUser" type="com.wangpan.netdisk.model.UserInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="usericon" jdbcType="VARCHAR" property="usericon" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="canusespace" jdbcType="VARCHAR" property="canusespace" />
+    <result column="usedspace" jdbcType="VARCHAR" property="usedspace" />
+    <result column="maxuploadsize" jdbcType="VARCHAR" property="maxuploadsize" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    msgno, id, fileno, commenttime, usernamea, usernameb, msg, msgsatus
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from comments
+    where msgno = #{msgno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comments
+    where msgno = #{msgno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wangpan.netdisk.model.Comments">
+    insert into comments (msgno, id, fileno,
+      commenttime, usernamea, usernameb,
+      msg, msgsatus,responno,belongname)
+    values (#{msgno,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{fileno,jdbcType=VARCHAR},
+      #{commenttime,jdbcType=TIMESTAMP}, #{usernamea,jdbcType=VARCHAR}, #{usernameb,jdbcType=VARCHAR},
+      #{msg,jdbcType=VARCHAR}, #{msgsatus,jdbcType=INTEGER},#{responno,jdbcType=VARCHAR},
+      #{belongname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangpan.netdisk.model.Comments">
+    insert into comments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="msgno != null">
+        msgno,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fileno != null">
+        fileno,
+      </if>
+      <if test="commenttime != null">
+        commenttime,
+      </if>
+      <if test="usernamea != null">
+        usernamea,
+      </if>
+      <if test="usernameb != null">
+        usernameb,
+      </if>
+      <if test="msg != null">
+        msg,
+      </if>
+      <if test="msgsatus != null">
+        msgsatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="msgno != null">
+        #{msgno,jdbcType=INTEGER},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fileno != null">
+        #{fileno,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null">
+        #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usernamea != null">
+        #{usernamea,jdbcType=VARCHAR},
+      </if>
+      <if test="usernameb != null">
+        #{usernameb,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null">
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="msgsatus != null">
+        #{msgsatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangpan.netdisk.model.Comments">
+    update comments
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fileno != null">
+        fileno = #{fileno,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null">
+        commenttime = #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usernamea != null">
+        usernamea = #{usernamea,jdbcType=VARCHAR},
+      </if>
+      <if test="usernameb != null">
+        usernameb = #{usernameb,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null">
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="msgsatus != null">
+        msgsatus = #{msgsatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where msgno = #{msgno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangpan.netdisk.model.Comments">
+    update comments
+    set id = #{id,jdbcType=INTEGER},
+      fileno = #{fileno,jdbcType=VARCHAR},
+      commenttime = #{commenttime,jdbcType=TIMESTAMP},
+      usernamea = #{usernamea,jdbcType=VARCHAR},
+      usernameb = #{usernameb,jdbcType=VARCHAR},
+      msg = #{msg,jdbcType=VARCHAR},
+      msgsatus = #{msgsatus,jdbcType=INTEGER}
+    where msgno = #{msgno,jdbcType=INTEGER}
+  </update>
+  <select id="findComments" resultType="com.wangpan.netdisk.model.Comments">
+      select * from comments
+    </select>
+  <select id="selectUsericon" parameterType="java.lang.String" resultMap="BaseResultMapUser">
+    select
+    *
+    from userinfo
+    where username = #{namea,jdbcType=VARCHAR}
+  </select>
+  <select id="selectGoodNum" parameterType="com.wangpan.netdisk.model.Comments" resultType="java.lang.Integer">
+    select
+    count(1)
+    from comments
+    where belongname = #{belongname,jdbcType=VARCHAR} and msgsatus = #{msgsatus,jdbcType=INTEGER}
+  </select>
+  <select id="selectUserInfo" parameterType="java.lang.String" resultMap="BaseResultMapUser">
+    select *
+    from userinfo
+    where username = #{belongname,jdbcType=VARCHAR}
+  </select>
+  <update id="updateGrade" parameterType="com.wangpan.netdisk.model.UserInfo">
+    update userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      usericon = #{usericon,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=INTEGER},
+      canusespace = #{canusespace,jdbcType=VARCHAR},
+      usedspace = #{usedspace,jdbcType=VARCHAR},
+      maxuploadsize = #{maxuploadsize,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

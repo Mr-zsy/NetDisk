@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangpan.netdisk.dao.FilesMapper" >
+  <resultMap id="BaseResultMap" type="com.wangpan.netdisk.model.Files" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="fileno" property="fileno" jdbcType="VARCHAR" />
+    <result column="file" property="file" jdbcType="VARCHAR" />
+    <result column="uploadtime" property="uploadtime" jdbcType="TIMESTAMP" />
+    <result column="goodno" property="goodno" jdbcType="INTEGER" />
+    <result column="filesize" property="filesize" jdbcType="VARCHAR" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <association property="userInfo" javaType="com.wangpan.netdisk.model.UserInfo" >
+      <id column="username" property="username" jdbcType="VARCHAR"/>
+      <result column="usericon" property="usericon" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, username, fileno, file, uploadtime, goodno, filesize, filename
+  </sql>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from files
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from files
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wangpan.netdisk.model.Files" >
+    insert into files (id, username, fileno, 
+      file, uploadtime, goodno, 
+      filesize, filename)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{fileno,jdbcType=VARCHAR}, 
+      #{file,jdbcType=VARCHAR}, #{uploadtime,jdbcType=TIMESTAMP}, #{goodno,jdbcType=INTEGER}, 
+      #{filesize,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangpan.netdisk.model.Files" >
+    insert into files
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="fileno != null" >
+        fileno,
+      </if>
+      <if test="file != null" >
+        file,
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime,
+      </if>
+      <if test="goodno != null" >
+        goodno,
+      </if>
+      <if test="filesize != null" >
+        filesize,
+      </if>
+      <if test="filename != null" >
+        filename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="fileno != null" >
+        #{fileno,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null" >
+        #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null" >
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodno != null" >
+        #{goodno,jdbcType=INTEGER},
+      </if>
+      <if test="filesize != null" >
+        #{filesize,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangpan.netdisk.model.Files" >
+    update files
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="fileno != null" >
+        fileno = #{fileno,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null" >
+        file = #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime = #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodno != null" >
+        goodno = #{goodno,jdbcType=INTEGER},
+      </if>
+      <if test="filesize != null" >
+        filesize = #{filesize,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangpan.netdisk.model.Files" >
+    update files
+    set username = #{username,jdbcType=VARCHAR},
+      fileno = #{fileno,jdbcType=VARCHAR},
+      file = #{file,jdbcType=VARCHAR},
+      uploadtime = #{uploadtime,jdbcType=TIMESTAMP},
+      goodno = #{goodno,jdbcType=INTEGER},
+      filesize = #{filesize,jdbcType=VARCHAR},
+      filename = #{filename,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--自定义-->
+  <select id="selectMaxId" resultType="java.lang.Integer">
+    select MAX(id)
+    from files
+  </select>
+
+  <select id="selectMyFiles" resultType="com.wangpan.netdisk.model.Files" parameterType="java.lang.String">
+    select * from files
+    where username=#{username,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectHotFiles" resultMap="BaseResultMap">
+    select userinfo.usericon,files.*
+    from userinfo,files
+    where userinfo.username = files.username
+    order by goodno desc limit 20
+  </select>
+
+  <select id="selectNewFiles" resultMap="BaseResultMap">
+    select userinfo.usericon,files.*
+    from userinfo,files
+    where userinfo.username = files.username
+    order by uploadtime desc limit 20;
+  </select>
+  <select id="selectByFileNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select userinfo.usericon,files.*
+    from userinfo,files
+    where userinfo.username = files.username and files.fileno=#{fileno,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByFileNo" parameterType="java.lang.String">
+    delete from files
+    where fileno = #{fileno,jdbcType=VARCHAR}
+  </delete>
+
+   <select id="selectByFileNoAndUserName" parameterType="com.wangpan.netdisk.model.Files" resultMap="BaseResultMap">
+       select userinfo.usericon,files.*
+    from userinfo,files
+    where userinfo.username = files.username and files.fileno=#{fileno,jdbcType=VARCHAR} and files.username=#{username,jdbcType=VARCHAR}
+   </select>
+</mapper>

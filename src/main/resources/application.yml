@@ -1,0 +1,27 @@
+#配置服务器信息
+server:
+#  address: 127.0.0.1
+  port: 8080
+
+# mysql 的数据库配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/netdisk?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=true
+    username: root
+    password: 123456
+#   driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:mybatis/*Mapper.xml
+  #对应实体类的路径
+  type-aliases-package: com.wangpan.netdisk.model
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+  jackson:
+    date-format: yyyy-MM-dd HH\:mm\:SS
+    time-zone: GMT+8
+

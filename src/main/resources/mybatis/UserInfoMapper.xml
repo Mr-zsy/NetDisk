@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangpan.netdisk.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wangpan.netdisk.model.UserInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="usericon" property="usericon" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="canusespace" property="canusespace" jdbcType="VARCHAR" />
+    <result column="usedspace" property="usedspace" jdbcType="VARCHAR" />
+    <result column="maxuploadsize" property="maxuploadsize" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, usericon, grade, canusespace, usedspace, maxuploadsize
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wangpan.netdisk.model.UserInfo" >
+    insert into userinfo (id, username, password, 
+      usericon, grade, canusespace, 
+      usedspace, maxuploadsize)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{usericon,jdbcType=VARCHAR}, #{grade,jdbcType=INTEGER}, #{canusespace,jdbcType=VARCHAR}, 
+      #{usedspace,jdbcType=VARCHAR}, #{maxuploadsize,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangpan.netdisk.model.UserInfo" >
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="usericon != null" >
+        usericon,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="canusespace != null" >
+        canusespace,
+      </if>
+      <if test="usedspace != null" >
+        usedspace,
+      </if>
+      <if test="maxuploadsize != null" >
+        maxuploadsize,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="usericon != null" >
+        #{usericon,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="canusespace != null" >
+        #{canusespace,jdbcType=VARCHAR},
+      </if>
+      <if test="usedspace != null" >
+        #{usedspace,jdbcType=VARCHAR},
+      </if>
+      <if test="maxuploadsize != null" >
+        #{maxuploadsize,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangpan.netdisk.model.UserInfo" >
+    update userinfo
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="usericon != null" >
+        usericon = #{usericon,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="canusespace != null" >
+        canusespace = #{canusespace,jdbcType=VARCHAR},
+      </if>
+      <if test="usedspace != null" >
+        usedspace = #{usedspace,jdbcType=VARCHAR},
+      </if>
+      <if test="maxuploadsize != null" >
+        maxuploadsize = #{maxuploadsize,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangpan.netdisk.model.UserInfo" >
+    update userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      usericon = #{usericon,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=INTEGER},
+      canusespace = #{canusespace,jdbcType=VARCHAR},
+      usedspace = #{usedspace,jdbcType=VARCHAR},
+      maxuploadsize = #{maxuploadsize,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--自定义-->
+  <select id="selectByUserName" resultType="com.wangpan.netdisk.model.UserInfo" parameterType="java.lang.String">
+    select *
+    from userinfo
+    where username= #{value}
+  </select>
+</mapper>

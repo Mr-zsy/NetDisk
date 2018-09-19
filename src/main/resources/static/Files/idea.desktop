@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Idea
+Comment=Rayn-IDEA-IU
+Exec=sh /opt/idea-IU-182.4323.46/bin/idea.sh
+Icon=/opt/idea-IU-182.4323.46/bin/idea.png
+Terminal=false
+Type=Application
+Categories=Developer;
