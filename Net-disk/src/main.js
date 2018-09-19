@@ -25,6 +25,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.baseURL = 'http://127.0.0.1:8080';
 // 薛皓
 // axios.defaults.baseURL = 'http://10.130.156.63:8080';
+// 陈清源
+// axios.defaults.baseURL = 'http://10.167.207.140:8081'
 
 
 Vue.prototype.$axios=axios;

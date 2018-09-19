@@ -66,7 +66,7 @@
          
         that.userIcon = res.data.data.usericon;
         that.userMsg = res.data.data;
-        that.$store.commit('increment',{userIcon:that.userIcon});
+        that.$store.commit('increment',{userIcon:that.userIcon,userName:that.userName});
       })
   },
     components: {
@@ -87,6 +87,7 @@
       },
       // 文件上传处理
       uploadFile:function(e){
+        var that = this;
         var file = e.target.files[0];
         var formdata = new FormData();
         formdata.append("file",file);
@@ -97,7 +98,9 @@
           formdata,
           {headers:{'Content-Type':'multipart/form-data'}}
           ).then(function(res){
-            console.log(res)
+            alert(res.data);
+
+            that.$router.go(0);
           })
       }
     }

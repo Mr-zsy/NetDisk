@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 export default  new Vuex.Store({
   state: {
-    userName: ""
+      userName:"",
+      userIcon:""
   },
   
   mutations: {
@@ -17,3 +18,4 @@ export default  new Vuex.Store({
     }
   }
 })
+

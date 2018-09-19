@@ -2,13 +2,18 @@
   <ul class="friends-list-wrapper">
     <close-icon class="close-icon" @close="hideFriendsList"></close-icon>
     <h3>分享给好友：</h3>
-    <li class="friends-list-item">
-        <img src="../../../assets/main-logo.png" alt="">
-        <div class="friend-msg y-middle">
-          <p class="txt-overflow1">{{'啊好的还嘚瑟刷卡回款速度发货时刻哈哈哈'}}</p>
-          <p>等级：<span>{{'22'}}</span></p>
+
+      <li class="friends-list-item" v-for="item in myFriendList" :key="item.friendname" :data-friendname="item.friendname" @click="goShareChat">
+        <div class="img-wrapper" :data-friendname="item.friendname">
+          <img :src="item.friend_icom" alt="">
+        </div>
+        <div class="friend-msg " :data-friendname="item.friendname"> 
+          <p class="txt-overflow1" :data-friendname="item.friendname">{{item.friendname}}</p>
+          <p :data-friendname="item.friendname">等级：<span>{{item.friend_grade}}</span></p>
         </div>
       </li>
+
+      
   </ul>
 </template>
 <script>
@@ -16,12 +21,38 @@ import closeIcon from "../../../components/closeIcon"
 
 export default {
   name:"friendsList",
+  data(){
+    return{
+      
+      friendName:""
+    }
+  },
+  props:['myFriendList','fileno','username'],
   components:{
     closeIcon
   },
   methods:{
     hideFriendsList:function(){
       event.target.onclick = this.$emit('friendsList')
+    },
+    
+    goShareChat:function(){
+      var friendName = event.target.dataset.friendname;
+      // 分享
+      this.$axios.post(
+        '/friend/fileshare',
+        this.qs.stringify({
+          username:this.username,
+          friendname:friendName,
+          fileno:this.fileno
+        })
+      ).then(function(res){
+        console.log("分享成功:",res.data)
+      })
+      let data={
+        friendName:friendName
+      }
+      this.$emit("shareChat",data);
     }
   }
 }
@@ -56,13 +87,15 @@ export default {
   overflow-x: hidden;
   zoom: 1;
 }
-.friend-msg{
-  padding-left: 25%;
-}
-.friends-list-item>img{
-  width: 20%;
+.friends-list-item .img-wrapper{
+  width: 60px;
+  height: 60px;
   float: left;
 }
+.friend-msg{
+  padding-left: 27%;
+}
+
 .friend-msg>p:nth-of-type(1){
   margin-bottom: 3px;
   width: 65%;

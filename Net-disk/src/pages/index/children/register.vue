@@ -47,29 +47,33 @@ import closeIcon from "../../../components/closeIcon"
         
       },
       goRegister:function(){
+        var that = this;
         // this.checkPassword();
-        var formdata = new FormData();
-        formdata.append("userIcon",this.picFile);
-        formdata.append("userName",this.userName);
-        formdata.append("password",this.password);
-        this.$axios.post(
-          '/user/register',
-          formdata,
-          {headers:{'Content-Type':'multipart/form-data'}}
-          ).then(function(res){
-            alert(res.data.message);
-            this.$router.go(-1);
-          }).catch(function(err){
+        if(this.isChinese(this.userName) || this.isChinese(this.password)){
+          alert("您设置的账号或密码中含有非法字符!");
+        }else{
+          var formdata = new FormData();
+          formdata.append("userIcon",this.picFile);
+          formdata.append("userName",this.userName);
+          formdata.append("password",this.password);
+          this.$axios.post(
+            '/user/register',
+            formdata,
+            {headers:{'Content-Type':'multipart/form-data'}}
+            ).then(function(res){
+              alert(res.data.message);
+              that.$router.go(-1);
+            }).catch(function(err){
 
-          })
-      },
-      checkPassword:function(){
-        var regExp = /^[a-zA-Z0-9_.,/;!@#$%^&*]$/;
-        if(regExp.test(this.password)){
-          alert("您设置的密码中含有非法字符!");
-          return ;
+            })
         }
+        
+      },
+      //检查是否为中文
+      isChinese:function(str) {
+          return /^[\u4e00-\u9fa5]+$/.test(str);
       }
+
     }
   }
 </script>

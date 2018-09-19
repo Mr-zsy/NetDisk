@@ -35,7 +35,7 @@ import closeIcon from "../../../components/closeIcon"
             userName:that.$store.state.userName
           })
         ).then(function(res){
-          console.log(res);
+          alert(res.data);
         })
       }
     }

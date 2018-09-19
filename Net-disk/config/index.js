@@ -28,6 +28,15 @@ module.exports = {
       //     '^/': ''          
       //   }
       // },
+
+      // 陈清源
+      // '/': {
+      //   target: 'http://10.167.207.140:8081',//设置你调用的接口域名和端口号 
+      //   changeOrigin: true,     //跨域
+      //   pathRewrite: {
+      //     '^/': ''          
+      //   }
+      // },
     },
     // Various Dev Server settings
     // host: 'localhost', // can be overwritten by process.env.HOST

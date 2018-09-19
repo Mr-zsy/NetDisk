@@ -2,7 +2,7 @@
   <div class="report">
     <h3>举报原因：</h3>
     <textarea name="" id="" cols="30" rows="10" style="resize:none"></textarea>
-    <button>举报</button>
+    <button @click="$emit('cancle')">举报</button>
     <button @click="$emit('cancle')">取消</button>
   </div>
 </template>

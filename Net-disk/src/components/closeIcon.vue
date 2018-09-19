@@ -1,6 +1,6 @@
 <template>
    <!-- 关闭按钮-->
-    <div class="close" @click="$emit('close')">
+    <div class="close" @click.stop="$emit('close')">
       <span class="line1 y-middle"></span><span class="line2 y-middle"></span>
     </div>
 </template>

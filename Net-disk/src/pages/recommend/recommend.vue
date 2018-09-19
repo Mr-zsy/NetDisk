@@ -5,17 +5,17 @@
       <h2>热门文件</h2>
       <hr>
       <ul class="hot-files-content">
-        <li v-for="item in hotFilesList" :key="item.fileno" class="hot-files-item" data-fileno="item.fileno" @click="goDetail">
-          <div style="padding:2px 0;margin-bottom:10px;">
-            <img src="../../assets/file.png" alt="" class="hot-file-icon">
-            <span class="hot-files-name">{{item.filename}}</span>
+        <li v-for="item in hotFilesList" :key="item.fileno" class="hot-files-item" :data-fileno="item.fileno" :data-username='item.username' @click="goDetail">
+          <!-- <div style="width:100%;height:100%;float:left"></div> -->
+          <div style="padding:2px 0;margin-bottom:10px;" :data-fileno="item.fileno" :data-username='item.username'>
+            <img src="../../assets/file.png" alt="" class="hot-file-icon" :data-fileno="item.fileno" :data-username='item.username'>
+            <span class="hot-files-name txt-overflow1" :data-fileno="item.fileno" :data-username='item.username'>{{item.filename}}</span>
           </div>
           
           <div class="img-wrapper"><img :src="item.userInfo.usericon" alt="" class="hot-user-icon"></div>
           <span class="hot-user-name">{{item.username}}</span>
-          <span class="hot-upload-time">{{item.uploadtime}}</span>
+          <span class="hot-upload-time">{{item.localUploadTime}}</span>
           <span class="hot-good-no"><span>{{item.goodno}}</span> 好评</span>
-          <hr>
         </li>
       </ul>
     </div>
@@ -24,16 +24,15 @@
       <h2>最新文件</h2>
       <hr>
       <ul class="new-files-content">
-        <li v-for="item in newFilesList" :key="item.fileno" class="new-files-item" data-fileno="item.fileno" @click="goDetail">
-          <div style="padding:2px 0;margin-bottom:12px;">
-            <img src="../../assets/file.png" alt="" class="new-file-icon">
-            <span class="new-files-name">{{item.filename}}</span>
+        <li v-for="item in newFilesList" :key="item.fileno" class="new-files-item" :data-fileno="item.fileno" :data-username='item.username' @click.capture="goDetail">
+          <div style="padding:2px 0;margin-bottom:12px;" :data-fileno="item.fileno" :data-username='item.username'>
+            <img src="../../assets/file.png" alt="" class="new-file-icon" :data-fileno="item.fileno" :data-username='item.username'>
+            <span class="new-files-name txt-overflow1" :data-fileno="item.fileno" :data-username='item.username'>{{item.filename}}</span>
           </div>
           <div class="img-wrapper"><img :src="item.userInfo.usericon" alt="" class="hot-user-icon"></div>
           <span class="hot-user-name">{{item.username}}</span>
-          <span class="hot-upload-time">{{item.uploadtime}}</span>
+          <span class="hot-upload-time">{{item.localUploadTime}}</span>
           <span class="hot-good-no"><span>{{item.goodno}}</span> 好评</span>
-          <hr>
         </li>
       </ul>
     </div>
@@ -71,7 +70,16 @@ export default {
   },
   methods: {
     goDetail:function(){
-        this.$router.push('fileDetail');
+      console.log("这个文件:",event.target,event.target.dataset);
+      var fileNo = event.target.dataset.fileno;
+      var userName = event.target.dataset.username;
+        this.$router.push({
+          name:'fileDetail',
+          params:{
+            fileNo:fileNo,
+            userName:userName
+          }
+        });
       }
   }
 };
@@ -118,8 +126,9 @@ export default {
 .hot-files-item{
   /* border: 1px solid rgb(218, 216, 216); */
   width: 100%;
-  padding: 5px 0;
+  padding: 10px 0;
   box-sizing: border-box;
+  border-bottom: 2px solid rgb(189, 188, 188);
 }
 .hot-files-item>hr{
   margin-top: 10px;
@@ -129,7 +138,10 @@ export default {
   margin-left: 5px;
   vertical-align: middle;
 }
-
+.hot-files-item div span{
+  display: inline-block;
+  width: 80%;
+}
 .hot-file-icon{
   width: 12%;
   height: 12%;
@@ -159,7 +171,11 @@ export default {
   vertical-align: middle;
 }
 
-
+.new-files-item{
+  border-bottom: 2px solid rgb(189, 188, 188);
+   padding: 10px 0;
+   box-sizing: border-box;
+}
 .new-files-item>.img-wrapper{
   width: 35px;
   height: 35px;
@@ -167,5 +183,9 @@ export default {
 .new-files-item>span{
   margin-left: 5px;
   font-size: 16px;
+}
+.new-files-item div span{
+  display: inline-block;
+  width: 50%;
 }
 </style>

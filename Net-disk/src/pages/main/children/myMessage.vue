@@ -12,6 +12,7 @@
       <p>最大可上传单个文件：<span>{{maxUploadSize}}M</span></p>
     </div>
     <a @click="changePassword" class="change-password">修改密码</a>
+    <a @click="quit"  class="change-password quit">退出</a>
     <change-password @change="changePassword" v-if="showChange"></change-password>
   </div>
 </template>
@@ -53,6 +54,9 @@ export default {
     },
     changePassword:function(){
       this.showChange = !this.showChange;
+    },
+    quit:function(){
+      this.$router.push({path:'/login'});
     }
   }
 }

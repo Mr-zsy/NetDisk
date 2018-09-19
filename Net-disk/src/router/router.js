@@ -17,7 +17,7 @@ import fileDetail from "../pages/fileDetail/fileDetail"
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',

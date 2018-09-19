@@ -28,6 +28,7 @@ export default {
   },
   mounted() {
     this.drawCanvas();
+    
   },
   beforeRouteLeave (to, from, next) {
     console.log(to,from);
